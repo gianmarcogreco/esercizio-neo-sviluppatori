@@ -1,0 +1,357 @@
+openapi: 3.0.0
+
+info:
+  title: App1 API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /api/gelati:
+    get:
+      summary: Ottieni una lista di gelati
+      responses:
+        '200':
+          description: Lista di gelati disponibile con successo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Gelato'
+        '500':
+          description: Errore interno del server
+    post:
+      summary: Aggiungi un gusto nuovo di gelato
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gelato'
+      responses:
+        '201':
+          description: Gelato creato con successo
+        '400':
+          description: Richiesta non valida
+        '500':
+          description: Errore interno del server
+
+  /api/gelati/{id}:
+    get:
+      summary: Ottieni un singolo gelato tramite ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del gelato
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dettagli del gelato recuperati con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gelato'
+        '404':
+          description: Gelato non trovato
+        '500':
+          description: Errore interno del server
+
+    put:
+      summary: Aggiorna un gelato esistente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del gelato da aggiornare
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gelato'
+      responses:
+        '200':
+          description: Gelato aggiornato con successo
+        '404':
+          description: Gelato non trovato
+        '400':
+          description: Dati non validi
+        '500':
+          description: Errore interno del server
+
+    delete:
+      summary: Cancella un gelato tramite ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del gelato da cancellare
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Gelato cancellato con successo
+        '404':
+          description: Gelato non trovato
+        '500':
+          description: Errore interno del server
+
+  /api/prenotante:
+    get:
+      summary: Lista delle persone che prenotano il gelato
+      responses:
+        '200':
+          description: Lista delle persone che prenotano un gelato ottenuta con successo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prenotante'
+        '404':
+          description: Prenotante non trovato
+        '500':
+          description: Errore interno del server
+    post:
+      summary: Aggiungi un prenotante
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prenotante'
+      responses:
+        '201':
+          description: Prenotante creato con successo
+        '400':
+          description: Richiesta non valida
+        '500':
+          description: Errore interno del server
+
+  /api/prenotante/{id_prenotante}:
+    get:
+      summary: Cerca prenotante per ID
+      parameters:
+        - name: id_prenotante
+          in: path
+          required: true
+          description: ID del prenotante
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dettagli del prenotante recuperati con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prenotante'
+        '404':
+          description: Prenotante non trovato
+        '500':
+          description: Errore interno del server
+
+    put:
+      summary: Aggiorna un prenotante esistente
+      parameters:
+        - name: id_prenotante
+          in: path
+          required: true
+          description: ID del prenotante da aggiornare
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prenotante'
+      responses:
+        '200':
+          description: Prenotante aggiornato con successo
+        '404':
+          description: Prenotante non trovato
+        '400':
+          description: Dati non validi
+        '500':
+          description: Errore interno del server
+
+    delete:
+      summary: Cancella un prenotante tramite ID
+      parameters:
+        - name: id_prenotante
+          in: path
+          required: true
+          description: ID del prenotante da cancellare
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Prenotante cancellato con successo
+        '404':
+          description: Prenotante non trovato
+        '500':
+          description: Errore interno del server
+
+  /api/prenota:
+    get:
+      summary: Ottieni una lista di prenotazioni
+      responses:
+        '200':
+          description: Lista delle prenotazioni ottenuta con successo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prenotazione'
+        '500':
+          description: Errore interno del server
+    post:
+      summary: Aggiungi una nuova prenotazione
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prenotazione'
+      responses:
+        '201':
+          description: Prenotazione creata con successo
+        '400':
+          description: Richiesta non valida
+        '500':
+          description: Errore interno del server
+
+  /api/prenota/{id_prenotante}/{id_gelato}:
+    get:
+      summary: Cerca prenotazione per ID prenotante e ID gelato
+      parameters:
+        - name: id_prenotante
+          in: path
+          required: true
+          description: ID del prenotante
+          schema:
+            type: integer
+        - name: id_gelato
+          in: path
+          required: true
+          description: ID del gelato
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dettagli della prenotazione recuperati con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prenotazione'
+        '404':
+          description: Prenotazione non trovata
+        '500':
+          description: Errore interno del server
+
+    put:
+      summary: Aggiorna una prenotazione esistente
+      parameters:
+        - name: id_prenotante
+          in: path
+          required: true
+          description: ID del prenotante
+          schema:
+            type: integer
+        - name: id_gelato
+          in: path
+          required: true
+          description: ID del gelato
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prenotazione'
+      responses:
+        '200':
+          description: Prenotazione aggiornata con successo
+        '404':
+          description: Prenotazione non trovata
+        '400':
+          description: Dati non validi
+        '500':
+          description: Errore interno del server
+
+    delete:
+      summary: Cancella una prenotazione tramite ID prenotante e ID gelato
+      parameters:
+        - name: id_prenotante
+          in: path
+          required: true
+          description: ID del prenotante
+          schema:
+            type: integer
+        - name: id_gelato
+          in: path
+          required: true
+          description: ID del gelato
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Prenotazione cancellata con successo
+        '404':
+          description: Prenotazione non trovata
+        '500':
+          description: Errore interno del server
+
+components:
+  schemas:
+    Gelato:
+      type: object
+      required:
+        - id
+        - nome
+        - descrizione
+      properties:
+        id:
+          type: integer
+          description: ID univoco del gelato
+        nome:
+          type: string
+          description: Nome del gusto di gelato
+        descrizione:
+          type: string
+          description: Descrizione del gelato
+          example: "Gelato al cioccolato realizzato con ingredienti di alta qualità."
+
+    Prenotante:
+      type: object
+      required:
+        - id_prenotante
+        - nome
+      properties:
+        id_prenotante:
+          type: integer
+          description: ID prenotante
+        nome:
+          type: string
+          description: Nome del prenotante
+
+    Prenotazione:
+      type: object
+      required:
+        - id_prenotante
+        - id_gelato
+      properties:
+        id_prenotante:
+          type: integer
+          description: ID del prenotante
+        id_gelato:
+          type: integer
+          description: ID del gelato

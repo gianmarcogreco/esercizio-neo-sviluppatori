@@ -1,0 +1,10 @@
+com\app1\api\ApiApi.class
+org\openapitools\OpenApiGeneratorApplication.class
+org\openapitools\RFC3339DateFormat.class
+com\app1\model\Prenotante.class
+com\app1\api\ApiUtil.class
+com\app1\api\ApiApiController.class
+com\app1\model\Prenotazione.class
+org\openapitools\configuration\SpringDocConfiguration.class
+org\openapitools\configuration\HomeController.class
+com\app1\model\Gelato.class
